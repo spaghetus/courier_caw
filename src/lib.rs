@@ -3,15 +3,13 @@
 //! Caw is a library which can armor data using a simple time-sensitive substitution
 //! cipher, intended to prevent automated identification of non-English data.
 
-use std::time::Instant;
-
 use chrono::{Date, Datelike, Utc};
 use rand::prelude::SliceRandom;
 use rand_pcg::Pcg64;
 use rayon::prelude::*;
 
 // rust-analyzer doesn't like this but it works
-const DICTIONARY: &'static [&'static str] = &include!("../words");
+const DICTIONARY: &[&str] = &include!("../words");
 
 /// The mappings between 16-bit words and English words.
 #[derive(Debug)]
