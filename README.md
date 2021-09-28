@@ -21,9 +21,10 @@ The first five entries in the list are assigned `begin`. The next five are assig
 1. Encoding requires the message as a list of bytes, the DictionaryMapping, the Dictionary, and a soft character limit.
    * The soft character limit may be exceeded slightly, so it's best to supply a smaller value than the real character limit.
 3. Each pair of bytes in the message is joined into a 16-bit number, with the earlier byte becoming the high byte and the later byte becoming the low byte.
-4. The `start` and `end` words are randomly chosen and added to the start and end of the message.
-5. The exact implementation of splits isn't important for compatibility; implement them however you like, ensuring that every fragment other than `begin` starts with `fragment` followed by the zero-based position of the fragment in the order of the message. (So, the first non-`begin` fragment will have `1`, since the `begin` fragment was `0`.)
-6. Success!
+4. Each 16-bit number is mapped to its signifying word.
+5. The `start` and `end` words are randomly chosen and added to the start and end of the message.
+6. The exact implementation of splits isn't important for compatibility; implement them however you like, ensuring that every fragment other than `begin` starts with `fragment` followed by the zero-based position of the fragment in the order of the message. (So, the first non-`begin` fragment will have `1`, since the `begin` fragment was `0`.)
+7. Success!
 
 ### Decoding
 
