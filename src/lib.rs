@@ -3,15 +3,15 @@
 //! Caw is a library which can armor data using a simple time-sensitive substitution
 //! cipher, intended to prevent automated identification of non-English data.
 
+use std::time::Instant;
+
 use chrono::{Date, Datelike, Utc};
-use lazy_static::lazy_static;
 use rand::prelude::SliceRandom;
 use rand_pcg::Pcg64;
 use rayon::prelude::*;
 
-lazy_static! {
-	static ref DICTIONARY: Vec<&'static str> = include_str!("../words").split('\n').collect();
-}
+// rust-analyzer doesn't like this but it works
+const DICTIONARY: &'static [&'static str] = &include!("../words");
 
 /// The mappings between 16-bit words and English words.
 #[derive(Debug)]
@@ -173,16 +173,12 @@ pub fn doff(messages: &[String], dict: &DictMappings) -> Vec<u8> {
 
 #[cfg(test)]
 mod tests {
-
-	use std::{thread, time::Duration};
-
 	use chrono::Utc;
 
 	use crate::DictMappings;
 
 	#[test]
 	fn reversibility() {
-		thread::sleep(Duration::from_secs(5));
 		let dict = DictMappings::from_seed(69, &Utc::now().date());
 		let test_data = "This is a very cool test string 😎".as_bytes();
 		let resultant_data = super::don(test_data, &dict, 50);

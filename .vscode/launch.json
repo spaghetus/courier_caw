@@ -13,7 +13,6 @@
 					"test",
 					"--no-run",
 					"--lib",
-					"--package=courier_caw"
 				],
 				"filter": {
 					"name": "courier_caw",
